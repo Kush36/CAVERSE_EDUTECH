@@ -1,0 +1,75 @@
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .green { fill:#1f5f4a; }
+      .gold { fill:#f0dd8a; }
+      .stroke-gold { stroke:#f0dd8a; stroke-width:10; fill:none; }
+      text { font-family: Arial, Helvetica, sans-serif; font-weight:700; }
+    </style>
+  </defs>
+
+  <!-- Outer Circle -->
+  <circle cx="300" cy="300" r="260" class="green"></circle>
+  <circle cx="300" cy="300" r="245" class="stroke-gold"></circle>
+  <circle cx="300" cy="300" r="225" class="stroke-gold"></circle>
+
+  <!-- CA Text -->
+  <text x="300" y="170" font-size="72" text-anchor="middle" class="gold">CA</text>
+
+  <!-- Shield -->
+  <path d="
+    M220 200
+    H380
+    V330
+    C380 370 300 420 300 420
+    C300 420 220 370 220 330
+    Z" class="gold"></path>
+
+  <path d="
+    M235 215
+    H365
+    V325
+    C365 355 300 395 300 395
+    C300 395 235 355 235 325
+    Z" class="green"></path>
+
+  <!-- Book -->
+  <rect x="255" y="260" width="40" height="40" class="gold"></rect>
+  <rect x="305" y="260" width="40" height="40" class="gold"></rect>
+
+  <!-- Quill -->
+  <path d="
+    M300 240
+    C330 260 350 290 345 310
+    C325 300 295 270 285 245
+    Z" class="gold"></path>
+
+  <!-- Laurel Left -->
+  <g transform="translate(165,240) rotate(-25)">
+    <ellipse cx="0" cy="0" rx="8" ry="18" class="gold"></ellipse>
+    <ellipse cx="0" cy="30" rx="8" ry="18" class="gold"></ellipse>
+    <ellipse cx="0" cy="60" rx="8" ry="18" class="gold"></ellipse>
+    <ellipse cx="0" cy="90" rx="8" ry="18" class="gold"></ellipse>
+  </g>
+
+  <!-- Laurel Right -->
+  <g transform="translate(435,240) rotate(25)">
+    <ellipse cx="0" cy="0" rx="8" ry="18" class="gold"></ellipse>
+    <ellipse cx="0" cy="30" rx="8" ry="18" class="gold"></ellipse>
+    <ellipse cx="0" cy="60" rx="8" ry="18" class="gold"></ellipse>
+    <ellipse cx="0" cy="90" rx="8" ry="18" class="gold"></ellipse>
+  </g>
+
+  <!-- Ribbon -->
+  <path d="
+    M140 430
+    H460
+    L430 480
+    H170
+    Z" class="gold"></path>
+
+  <!-- Ribbon Text -->
+  <text x="300" y="460" font-size="42" text-anchor="middle" fill="#1f5f4a">
+    CA VERSE
+  </text>
+</svg>
