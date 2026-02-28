@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard, Users, FileText, Upload, BarChart3,
   Settings, Bell, Search, Menu, X, LogOut, TrendingUp,
-  UserPlus, FileQuestion, Activity, Calendar, Download,
-  Eye, Edit, Trash2, Plus, Filter, ChevronDown, CheckCircle,
+  UserPlus, FileQuestion, Activity, Download,
+  Eye, Edit, Trash2, Plus, CheckCircle,
   AlertCircle, XCircle
 } from 'lucide-react';
 import AdminService, { Student, QuestionPaper, StudentActivity, DashboardStats } from '../admin/AdminService';
@@ -1847,10 +1847,10 @@ const AdminPanel: React.FC = () => {
           totalMarks: parseInt(formData.totalMarks),
           totalQuestions: parseInt(formData.totalQuestions),
           difficulty: formData.difficulty as 'Easy' | 'Medium' | 'Hard',
-          status: isDraft ? 'draft' : 'published'
+          status: (isDraft ? 'draft' : 'published') as 'draft' | 'published' | 'archived'
         };
 
-        const newPaper = await AdminService.uploadQuestionPaper(paperData, selectedFile || undefined);
+        await AdminService.uploadQuestionPaper(paperData, selectedFile || undefined);
         showToast(`Question paper ${isDraft ? 'saved as draft' : 'published'} successfully!`, 'success');
         
         // Reset form
@@ -2579,7 +2579,7 @@ const AdminPanel: React.FC = () => {
     );
   };
 
-  const Settings = () => {
+  const SettingsPanel = () => {
     const [settings, setSettings] = useState({
       instituteName: 'CaVerse Edutech',
       instituteEmail: 'admin@caverse.edu',
@@ -2917,7 +2917,7 @@ const AdminPanel: React.FC = () => {
       case 'analytics':
         return <Analytics />;
       case 'settings':
-        return <Settings />;
+        return <SettingsPanel />;
       default:
         return <DashboardOverview />;
     }

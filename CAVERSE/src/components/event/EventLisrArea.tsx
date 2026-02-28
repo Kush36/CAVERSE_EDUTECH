@@ -9,7 +9,7 @@ const EventListArea = () => {
   // Replace this URL with your actual Google Form URL
   const googleFormUrl = "https://forms.gle/HuWo6SKiKUPrCGAN8";
 
-  const handleJoinFree = (eventName: string) => {
+  const handleJoinFree = (_eventName: string) => {
     // Open Google Form in new tab with event name pre-filled if needed
     window.open(googleFormUrl, '_blank');
   };

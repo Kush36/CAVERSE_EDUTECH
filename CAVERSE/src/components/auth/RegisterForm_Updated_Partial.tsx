@@ -2,7 +2,7 @@
 // frontend/src/components/auth/RegisterForm.tsx
 import React, { useState } from "react";
 import { authAPI } from "../../services/api";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const RegisterForm: React.FC = () => {
   const { login } = useAuth();
@@ -17,7 +17,7 @@ const RegisterForm: React.FC = () => {
     confirmPassword: "",
   });
 
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [_profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -66,10 +66,10 @@ const RegisterForm: React.FC = () => {
         password: formData.password,
       };
 
-      const response = await authAPI.register(payload, profilePhoto);
+      const response = await authAPI.register(payload);
 
       if (response.success) {
-        login(response.data.user);
+        login(formData.email, formData.password);
         alert("Registration successful 🎉");
       } else {
         setError(response.message || "Registration failed");

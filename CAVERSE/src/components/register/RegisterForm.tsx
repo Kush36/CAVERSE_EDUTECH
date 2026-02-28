@@ -20,7 +20,7 @@ const { register } = useAuth();
     confirmPassword: "",
   });
 
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [_profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

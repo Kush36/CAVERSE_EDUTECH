@@ -431,7 +431,7 @@ const PricingArea: React.FC = () => {
   const [selectedSchedule, setSelectedSchedule] = useState<keyof typeof scheduleData>('foundation');
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [_selectedPlan, _setSelectedPlan] = useState<Plan | null>(null);
   const [showExploreModal, setShowExploreModal] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState<'group1' | 'group2' | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);

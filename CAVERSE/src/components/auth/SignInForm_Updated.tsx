@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { authAPI } from '../../services/api';
 
 interface RegisterFormProps {
@@ -22,7 +22,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess }) => {
     confirmPassword: ''
   });
 
-  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [_profilePhoto, setProfilePhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -159,12 +159,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess }) => {
 
         console.log('Submitting registration:', { ...userData, password: '[HIDDEN]' });
 
-        const response = await authAPI.register(userData, profilePhoto);
+        const response = await authAPI.register(userData);
 
         console.log('Registration response:', response);
 
         if (response.success) {
-          login(response.data.user);
+          login(formData.email, formData.password);
           alert(`Welcome to CaVerse, ${formData.firstName}! Your account has been created successfully.`);
           
           // Call success callback if provided
