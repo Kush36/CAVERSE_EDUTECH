@@ -2,7 +2,6 @@ const Course          = require('../models/Course');
 const Question        = require('../models/Question');
 const QuestionAttempt = require('../models/QuestionAttempt');
 const User            = require('../models/User');
-
 // ── list courses ──────────────────────────────────────────────────────────────
 exports.getCourses = async (req, res, next) => {
   try {
@@ -87,13 +86,19 @@ exports.getCourseProgress = async (req, res, next) => {
     const { id: courseId } = req.params;
     const studentId = req.user._id;
 
-    const [course, totalQuestions, solvedAttempts] = await Promise.all([
-      Course.findById(courseId).select('title level totalQuestions'),
-      Question.countDocuments({ courseId, isActive: true }),
-      QuestionAttempt.countDocuments({ studentId, solved: true }),
-    ]);
-
+    const course = await Course.findById(courseId).select('title level totalQuestions');
     if (!course) return res.status(404).json({ success: false, message: 'Course not found' });
+
+    // Get all question IDs for this course, then count only those attempts
+    const courseQuestions = await Question.find({ courseId, isActive: true }).select('_id');
+    const questionIds     = courseQuestions.map((q) => q._id);
+    const totalQuestions  = questionIds.length;
+
+    const solvedAttempts = await QuestionAttempt.countDocuments({
+      studentId,
+      questionId: { $in: questionIds },
+      solved: true,
+    });
 
     const progress = totalQuestions > 0 ? Math.round((solvedAttempts / totalQuestions) * 100) : 0;
 

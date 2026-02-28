@@ -18,11 +18,15 @@ exports.getDashboard = async (req, res, next) => {
     // Progress per enrolled course
     const courseProgress = await Promise.all(
       (user.enrolledCourses || []).map(async (course) => {
+        const Question = require('../models/Question');
+        const courseQuestions = await Question.find({ courseId: course._id, isActive: true }).select('_id');
+        const questionIds = courseQuestions.map((q) => q._id);
         const solved = await QuestionAttempt.countDocuments({
           studentId,
+          questionId: { $in: questionIds },
           solved: true,
         });
-        const total = course.totalQuestions || 0;
+        const total = questionIds.length;
         return {
           course,
           questionsAttempted: solved,

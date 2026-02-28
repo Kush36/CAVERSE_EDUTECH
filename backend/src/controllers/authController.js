@@ -1,10 +1,10 @@
-const jwt       = require('jsonwebtoken');
-const crypto    = require('crypto');
-const nodemailer = require('nodemailer');
+const jwt        = require('jsonwebtoken');
+const crypto     = require('crypto');
+const nodemailer  = require('nodemailer');
 const { validationResult } = require('express-validator');
 const User = require('../models/User');
 
-// ── helpers ──────────────────────────────────────────────────────────────────
+// ── helpers ───────────────────────────────────────────────────────────────────
 const signAccessToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '7d' });
 
@@ -12,6 +12,9 @@ const signRefreshToken = (id) =>
   jwt.sign({ id }, process.env.JWT_REFRESH_SECRET, {
     expiresIn: process.env.JWT_REFRESH_EXPIRE || '30d',
   });
+
+/** Hash a token with SHA-256 before DB storage to mitigate token theft if DB is compromised. */
+const hashToken = (token) => crypto.createHash('sha256').update(token).digest('hex');
 
 // ── register ─────────────────────────────────────────────────────────────────
 exports.register = async (req, res, next) => {
@@ -33,8 +36,8 @@ exports.register = async (req, res, next) => {
     const accessToken  = signAccessToken(user._id);
     const refreshToken = signRefreshToken(user._id);
 
-    // Store refresh token (hashed)
-    await User.findByIdAndUpdate(user._id, { refreshToken });
+    // Store hashed refresh token
+    await User.findByIdAndUpdate(user._id, { refreshToken: hashToken(refreshToken) });
 
     res.status(201).json({
       success: true,
@@ -68,7 +71,7 @@ exports.login = async (req, res, next) => {
     const accessToken  = signAccessToken(user._id);
     const refreshToken = signRefreshToken(user._id);
 
-    user.refreshToken = refreshToken;
+    user.refreshToken = hashToken(refreshToken);
     await user.save({ validateBeforeSave: false });
 
     res.json({
@@ -86,7 +89,7 @@ exports.logout = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
     if (refreshToken) {
-      await User.findOneAndUpdate({ refreshToken }, { refreshToken: null });
+      await User.findOneAndUpdate({ refreshToken: hashToken(refreshToken) }, { refreshToken: null });
     }
     res.json({ success: true, message: 'Logged out successfully' });
   } catch (err) {
@@ -105,14 +108,14 @@ exports.refreshToken = async (req, res, next) => {
     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
     const user    = await User.findById(decoded.id).select('+refreshToken');
 
-    if (!user || user.refreshToken !== refreshToken) {
+    if (!user || user.refreshToken !== hashToken(refreshToken)) {
       return res.status(401).json({ success: false, message: 'Invalid refresh token' });
     }
 
     const newAccessToken  = signAccessToken(user._id);
     const newRefreshToken = signRefreshToken(user._id);
 
-    user.refreshToken = newRefreshToken;
+    user.refreshToken = hashToken(newRefreshToken);
     await user.save({ validateBeforeSave: false });
 
     res.json({

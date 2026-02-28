@@ -121,17 +121,21 @@ const seedData = async () => {
 
   const adminCount = await User.countDocuments({ role: 'admin' });
   if (adminCount === 0) {
+    const adminPassword = process.env.ADMIN_SEED_PASSWORD || 'Admin@123456';
     await User.create({
       firstName: 'Admin',
       lastName:  'CAVERSE',
-      email:     'admin@caverse.in',
-      password:  'Admin@123456',
+      email:     process.env.ADMIN_SEED_EMAIL || 'admin@caverse.in',
+      password:  adminPassword,
       phone:     '9999999999',
       role:      'admin',
       isVerified: true,
       status:    'active',
     });
-    console.log('✅  Seeded admin user  →  admin@caverse.in / Admin@123456');
+    console.log(`✅  Seeded admin user  →  ${process.env.ADMIN_SEED_EMAIL || 'admin@caverse.in'}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(`    Password: ${adminPassword} (set ADMIN_SEED_PASSWORD env var to override)`);
+    }
   }
 };
 
