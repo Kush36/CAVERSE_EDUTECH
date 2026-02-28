@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
  
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const event_data = [
@@ -53,19 +52,11 @@ const event_data = [
 
 const EventHomeTwo = () => {
   
-  // State to track the active index
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
   // Google Form URL
   const googleFormUrl = "https://forms.gle/HuWo6SKiKUPrCGAN8";
 
-  // Function to handle setting the active index
-  const handleActive = (index: number) => {
-    setActiveIndex(index === activeIndex ? null : index);
-  };
-
   // Function to handle Join Free button click
-  const handleJoinFree = (eventName: string) => {
+  const handleJoinFree = (_eventName: string) => {
     window.open(googleFormUrl, '_blank');
   };
  

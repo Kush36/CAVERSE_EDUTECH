@@ -110,7 +110,6 @@ export interface AnalyticsData {
 
 class AdminService {
   private static instance: AdminService;
-  private apiBaseUrl: string = '/api/admin'; // Update with your actual API endpoint
 
   private constructor() {}
 
@@ -224,7 +223,7 @@ class AdminService {
   /**
    * Delete student
    */
-  async deleteStudent(studentId: string): Promise<boolean> {
+  async deleteStudent(_studentId: string): Promise<boolean> {
     try {
       // TODO: Replace with actual API call
       // const response = await fetch(`${this.apiBaseUrl}/students/${studentId}`, {
@@ -256,7 +255,7 @@ class AdminService {
   /**
    * Bulk operations on students
    */
-  async bulkUpdateStudents(studentIds: string[], updates: Partial<Student>): Promise<boolean> {
+  async bulkUpdateStudents(_studentIds: string[], _updates: Partial<Student>): Promise<boolean> {
     try {
       // TODO: Replace with actual API call
       // const response = await fetch(`${this.apiBaseUrl}/students/bulk`, {
@@ -310,7 +309,7 @@ class AdminService {
   /**
    * Upload new question paper
    */
-  async uploadQuestionPaper(paperData: Partial<QuestionPaper>, file?: File): Promise<QuestionPaper> {
+  async uploadQuestionPaper(paperData: Partial<QuestionPaper>, _file?: File): Promise<QuestionPaper> {
     try {
       // TODO: Replace with actual API call with file upload
       // const formData = new FormData();
@@ -362,7 +361,7 @@ class AdminService {
   /**
    * Delete question paper
    */
-  async deleteQuestionPaper(paperId: string): Promise<boolean> {
+  async deleteQuestionPaper(_paperId: string): Promise<boolean> {
     try {
       // TODO: Replace with actual API call
       return true;
@@ -531,7 +530,7 @@ class AdminService {
   // ==================== MOCK DATA GENERATORS ====================
   // These will be replaced with actual API calls
 
-  private getMockStudents(filters?: any): { students: Student[]; total: number } {
+  private getMockStudents(_filters?: any): { students: Student[]; total: number } {
     const mockStudents: Student[] = [
       {
         id: '1',
@@ -568,7 +567,7 @@ class AdminService {
     };
   }
 
-  private getMockQuestionPapers(filters?: any): QuestionPaper[] {
+  private getMockQuestionPapers(_filters?: any): QuestionPaper[] {
     return [
       {
         id: 'QP001',
@@ -588,7 +587,7 @@ class AdminService {
     ];
   }
 
-  private getMockActivities(filters?: any): StudentActivity[] {
+  private getMockActivities(_filters?: any): StudentActivity[] {
     return [
       {
         id: 'ACT001',
@@ -623,7 +622,7 @@ class AdminService {
     };
   }
 
-  private getMockAnalytics(period: string): AnalyticsData {
+  private getMockAnalytics(_period: string): AnalyticsData {
     return {
       studentGrowth: [
         { month: 'Jan', count: 150 },
@@ -653,7 +652,7 @@ class AdminService {
     };
   }
 
-  private getMockTestResults(filters?: any): TestResult[] {
+  private getMockTestResults(_filters?: any): TestResult[] {
     return [
       {
         id: 'RES001',

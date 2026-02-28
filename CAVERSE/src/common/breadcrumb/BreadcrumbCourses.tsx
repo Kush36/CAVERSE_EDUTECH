@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
  
 
-const BreadcrumbCourses = ({title, subtitle} : any) => {
+const BreadcrumbCourses = ({title, subtitle: _subtitle} : any) => {
   return (
     <>
         <section className="breadcrumb-wrapper courses-page-banner">

@@ -90,7 +90,7 @@ const HeaderTwo = () => {
   const [searchResults, setSearchResults] = useState<Course[]>([]);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedLevel, setSelectedLevel] = useState<string>("all");
+  const [_selectedLevel, setSelectedLevel] = useState<string>("all");
 
   // Handle course level selection
   const selectHandler = (item: Option, name: string) => {
@@ -136,7 +136,7 @@ const HeaderTwo = () => {
   };
 
   // Handle search result click
-  const handleResultClick = (courseId: string) => {
+  const handleResultClick = (_courseId: string) => {
       navigate("/courses");
   // /${courseId}
     setSearchQuery("");

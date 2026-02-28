@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard, Users, FileText, Upload, BarChart3,
   Settings as SettingsIcon, Bell, Search, Menu, X, LogOut, TrendingUp,
-  UserPlus, FileQuestion, Activity, Calendar, Download,
-  Eye, Edit, Trash2, Plus, Filter, ChevronDown, CheckCircle,
+  UserPlus, FileQuestion, Activity, Download,
+  Eye, Edit, Trash2, Plus, CheckCircle,
   AlertCircle, XCircle
 } from 'lucide-react';
 import AdminService, { Student, QuestionPaper, StudentActivity, DashboardStats } from './AdminService';
@@ -1850,7 +1850,7 @@ const AdminPanel: React.FC = () => {
           status: (isDraft ? 'draft' : 'published') as 'draft' | 'published'
         };
 
-        const newPaper = await AdminService.uploadQuestionPaper(paperData, selectedFile || undefined);
+        await AdminService.uploadQuestionPaper(paperData, selectedFile || undefined);
         showToast(`Question paper ${isDraft ? 'saved as draft' : 'published'} successfully!`, 'success');
         
         // Reset form
@@ -2499,7 +2499,7 @@ const AdminPanel: React.FC = () => {
               Student Growth
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {analyticsData.studentGrowth.map((data: any, index: number) => {
+              {analyticsData.studentGrowth.map((data: any, _index: number) => {
                 const maxCount = Math.max(...analyticsData.studentGrowth.map((d: any) => d.count));
                 const width = (data.count / maxCount) * 100;
                 
@@ -2541,7 +2541,7 @@ const AdminPanel: React.FC = () => {
               Test Attempts (Last 7 Days)
             </h3>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '200px' }}>
-              {analyticsData.testAttemptsTrend.slice(-7).map((data: any, index: number) => {
+              {analyticsData.testAttemptsTrend.slice(-7).map((data: any, _index: number) => {
                 const maxCount = Math.max(...analyticsData.testAttemptsTrend.map((d: any) => d.count));
                 const height = (data.count / maxCount) * 160;
                 

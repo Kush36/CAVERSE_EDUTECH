@@ -2,10 +2,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   MessageCircle, Send, X, Minimize2, Maximize2, BookOpen, 
-  FileText, Calendar, Award, HelpCircle, TrendingUp, Clock,
+  FileText, Calendar, TrendingUp,
   Sparkles, Bot, User as UserIcon
 } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface Message {
   id: string;
